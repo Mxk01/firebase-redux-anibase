@@ -1,0 +1,31 @@
+.navbar__container
+{
+    display:flex;
+
+    background: rgb(24, 24, 24);
+    justify-content: space-evenly;
+    align-items: center;
+    list-style-type: none;
+    position:fixed;
+    top:0;
+    height:6vh;
+    width:100vw;
+    margin:0;
+    padding:1.4rem;
+}
+
+.navbar__container > li 
+{
+    color:rgb(255, 29, 86);
+ 
+    border-color:rgb(255, 29, 86);
+
+}
+
+.navbar__container > li:hover 
+{
+    border-bottom:3px solid rgb(255, 29, 86);
+ 
+     cursor:pointer;
+
+ }

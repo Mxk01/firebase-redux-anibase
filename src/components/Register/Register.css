@@ -1,0 +1,73 @@
+.register__container
+{
+    background-color:#16181a;
+    height:100vh;
+   
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register__form
+{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size:1rem;
+    
+      background:linear-gradient(90deg, rgba(11, 17, 14, 0.801) 0%, rgba(24, 22, 12, 0.822) 100%, rgb(252, 240, 69) 100%),url('https://sa.kapamilya.com/absnews/abscbnnews/media/news-special1/entertainment/12/11/121116_kimi.jpg');
+    height:50vh;
+    width:60vw;
+     background-repeat:none;
+    background-size:cover;
+    border-radius:10px;
+ }
+
+.register__form > label >  input ,
+.register__form >    button
+{
+    margin:5px;
+    padding:0.6rem;
+    width:20vw;
+    border-radius:15px;
+    border:0;
+    backdrop-filter: blur(5px);
+
+    font-family: 'Lato', sans-serif;
+    outline:none;
+    background: rgba(44, 43, 43, 0.3);
+    color:rgb(40, 255, 58);
+    border:1px solid rgb(40, 255, 58);
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: all 5000s ease-in-out 0s;
+    transition-property: background-color, color;
+}
+
+button 
+{
+    cursor:pointer
+}
+
+.r__email  ,.r__password,.r__username 
+{
+   color:rgb(40, 255, 58);
+   font-family: 'Lato', sans-serif;
+   font-size:1rem;
+    
+}
+ 
+@media only screen and (max-width: 600px) {
+    .register__form {
+      width:80vw;
+    }
+    .register__form > label >  input ,
+.register__form >    button
+{
+    width:40vw;
+}
+  }
