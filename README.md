@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Login/Register w Firebase
 ![phone](https://user-images.githubusercontent.com/61979889/136717248-aaa76a21-9955-416f-8976-438b49219585.PNG)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
