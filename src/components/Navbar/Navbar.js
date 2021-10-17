@@ -25,6 +25,7 @@ function Navbar() {
     const history = useHistory()
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+    const [photo, setPhoto] = useState('');
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -41,9 +42,21 @@ function Navbar() {
     useEffect(() => {
         let auth = getAuth()
         onAuthStateChanged(auth, (user) => {
-            setUser(user.displayName)
+
+            if (!user) {
+                history.push('/login')
+            }
+            else {
+                setUser(user.displayName)
+                setPhoto(user.photoURL);
+                console.log(photo)
+            }
+
         })
     }, [])
+
+
+
 
 
     // let username = getAuth().currentUser;
@@ -60,16 +73,25 @@ function Navbar() {
         <div>
 
             <ul className="navbar__container">
-                <li><HomeIcon style={{ fontSize: '2rem' }} /></li>
-                <li><BookmarkIcon style={{ fontSize: '2rem' }} /></li>
-                <li><SearchIcon style={{ fontSize: '2rem' }} /></li>
+                <Link to="/" style={{
+                    textDecoration: "none",
+                    color: "rgb(255, 29, 86)"
+                }}>
+                    <li><HomeIcon style={{ fontSize: '2rem' }} /></li>
+                </Link>
+                <Link to="/favorites" style={{
+                    textDecoration: "none",
+                    color: "rgb(255, 29, 86)"
+                }}><li><BookmarkIcon style={{ fontSize: '2rem' }} /></li>
+                </Link>
                 <Tooltip title="Account settings">
 
                     <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
 
-                        <Avatar sx={{ width: 32, height: 32 }}>
-                            <img src="https://c4.wallpaperflare.com/wallpaper/807/852/840/anime-chainsaw-man-denji-chainsaw-man-anime-boys-null-hd-wallpaper-preview.jpg"
-                                style={{ width: "32px", height: "32px", objectFit: "cover" }} />
+                        <Avatar sx={{ width: 32, height: 32 }}
+                            src={photo}
+                        >
+
                         </Avatar>
 
                     </IconButton>
@@ -121,12 +143,17 @@ function Navbar() {
                         </ListItemIcon>
                         Add another account
                     </MenuItem>
-                    <MenuItem>
-                        <ListItemIcon>
-                            <Settings fontSize="small" />
-                        </ListItemIcon>
-                        Settings
-                    </MenuItem>
+                    <Link to="/user-edit" style={{ textDecoration: "none", color: "black" }}>
+                        <MenuItem>
+                            <ListItemIcon>
+                                <Settings fontSize="small" />
+                            </ListItemIcon>
+                            Settings
+                        </MenuItem>
+                    </Link>
+
+
+
                     <MenuItem onClick={() => logout()}>
                         <ListItemIcon>
                             <Logout fontSize="small" />
