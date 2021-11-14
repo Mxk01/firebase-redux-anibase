@@ -2,17 +2,23 @@ import React, { useState } from 'react'
 import './User.css';
 import { getAuth, updateProfile } from 'firebase/auth'
 import Navbar from '../Navbar/Navbar'
+import { collection, doc, query, where, deleteDoc, setDoc, getDocs } from '@firebase/firestore';
+import { getDB } from '../../utils/firebase';
+import { useHistory } from 'react-router-dom'
 function User() {
     let user = getAuth().currentUser
     console.log(user);
-    console.log(user.metadata)
+    console.log(collection(getDB(), 'users'));
     let [photo, setPhoto] = useState(user.photoURL);
     let [username, setUsername] = useState(user.displayName)
-
+    let history = useHistory('/')
     let updateUser = (e) => {
         e.preventDefault();
         updateProfile(user, { photoURL: photo, displayName: username })
-            .then(function () { console.log(user) })
+            .then(function () {
+                console.log(user)
+                history.push('/')
+            })
             .catch(function (error) { console.log(error) });
     }
 
@@ -26,8 +32,8 @@ function User() {
                 {/* Update username / Update  image  / password  */}
                 {/* get user reference  then update fields */}
                 <form onSubmit={(e) => updateUser(e)} className="user__form">
-                    <input type="text" style={{ marginTop: "16rem" }} />
-                    <label htmlFor="">Username</label>
+
+                    <label htmlFor="" style={{ marginTop: "16rem" }}>Username</label>
                     <input type="text" value={username}
                         onChange={(e) => setUsername(e.target.value)} required />
                     <label htmlFor="">Avatar URL </label>

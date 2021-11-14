@@ -1,0 +1,5 @@
+-  add genres for each anime
+-  sorting (completed/in progress/ dropped)
+-  delete anime from list
+-  get list of users 
+-  get users favorites

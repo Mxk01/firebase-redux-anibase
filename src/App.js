@@ -14,6 +14,7 @@ import { collection, doc, query, where, deleteDoc, setDoc, getDocs } from '@fire
 // getting db instance 
 import { getDB } from './utils/firebase.js'
 import Button from '@mui/material/Button';
+// import { initializeApp } from 'firebase-admin/app';
 
 import { useCallback } from 'react';
 
@@ -36,16 +37,22 @@ import Favorites from './Favorites'
 function App() {
   let [anime, setAnime] = useState([]);
   let [user, setUser] = useState(null);
-  let [searchTerm, setSearchTerm] = useState('Naruto');
+  let [searchTerm, setSearchTerm] = useState('');
   let history = useHistory()
   let [checkedIndex, setCheckedIndex] = useState(null);
   let [categorySelected, setCategorySelected] = useState('');
   let [likedIndex, setLikedIndex] = useState(null);
+
+
+  // console.log(doc(collection(db, 'users')))
   useEffect(() => {
     let fetchAnime = async () => {
+
       fetch(`https://kitsu.io/api/edge/anime/?filter[text]=${searchTerm}`)
         .then((result) => result).then(async result => {
           let res = await result.json()
+          // set searchTerm to storage
+          localStorage.setItem('term', searchTerm);
           setAnime(res.data);
         });
     }
@@ -53,7 +60,7 @@ function App() {
 
 
     if (searchTerm == '') {
-      setSearchTerm('Naruto');
+      setSearchTerm(localStorage.getItem('term'));
     }
 
 
@@ -89,12 +96,12 @@ function App() {
       history.push('/')
     }
   }, [])
-
+  let auth = getAuth();
   let username = getAuth().currentUser;
   console.log(username)
 
 
-
+  console.log(getAuth())
 
   let addFavorite = (single) => {
     setLikedIndex(lindex => lindex === parseInt(single.id) ? null : parseInt(single.id))
@@ -125,6 +132,27 @@ function App() {
   // let leastFavoritesCount = Math.min(...anime.map(single => single.attributes.favoritesCount));
   // console.log(mostFavoritesCount)
   // console.log(leastFavoritesCount)
+
+
+  // const listAllUsers = (nextPageToken) => {
+  //   // List batch of users, 1000 at a time.
+  //   getAuth()
+  //     .listUsers(1000, nextPageToken)
+  //     .then((listUsersResult) => {
+  //       listUsersResult.users.forEach((userRecord) => {
+  //         console.log('user', userRecord.toJSON());
+  //       });
+  //       if (listUsersResult.pageToken) {
+  //         // List next batch of users.
+  //         listAllUsers(listUsersResult.pageToken);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log('Error listing users:', error);
+  //     });
+  // };
+  // // Start listing users from the beginning, 1000 at a time.
+  // listAllUsers();
   return (
 
     <Switch>
@@ -154,8 +182,10 @@ function App() {
             <Button variant="outlined"
               style={{ color: "rgb(255,29,86)", borderColor: "rgb(255,29,86)" }}
               onClick={() => {
-                // setCategorySelected('drama');
-              }}>Drama</Button>
+                console.log('Drama')
+              }}
+            >Drama
+            </Button>
             <Button variant="outlined"
               style={{ color: "rgb(255,29,86)", borderColor: "rgb(255,29,86)" }}
             >Action</Button>
@@ -215,6 +245,8 @@ function App() {
                                 color: "lightgreen",
                                 cursor: "pointer"
                               }} onClick={() => {
+                                console.log(single);
+
                                 setCheckedIndex(lindex => lindex === parseInt(single.id) ? null : parseInt(single.id))
 
                               }} />)

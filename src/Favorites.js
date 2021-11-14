@@ -92,7 +92,7 @@ function Favorites() {
                                             setRating(e.target.value);
                                         }}
                                     /> */}
-                                    <p>Popularity rank : {fav.popularityRank}</p>
+                                    <p className="anime__popularity">Popularity rank : {fav.popularityRank}</p>
                                     {fav.episodeCount === 1 ? (
                                         <Button
                                             variant="outlined"
